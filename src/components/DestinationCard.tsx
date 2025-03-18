@@ -1,14 +1,14 @@
 
 import React from 'react';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Destination } from '@/hooks/useCrowdData';
+import { Destination } from '@/utils/crowdData';
 
 interface DestinationCardProps {
   destination: Destination;
 }
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
-  const { name, location, crowdLevel, image, lastUpdated } = destination;
+  const { name, location, crowdLevel, imageUrl, lastUpdated } = destination;
   
   // Determine crowd level indicator color
   const crowdColor = {
@@ -21,7 +21,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
     <Card className="overflow-hidden group transition-all hover:shadow-lg">
       <div className="aspect-video relative overflow-hidden">
         <img 
-          src={image || "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2"} 
+          src={imageUrl || "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2"} 
           alt={name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />

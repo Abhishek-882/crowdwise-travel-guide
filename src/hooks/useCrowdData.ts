@@ -13,7 +13,7 @@ const sampleDestinations: Destination[] = [
     imageUrl: 'https://images.unsplash.com/photo-1564507592333-c60657eea523',
     crowdLevel: 'Medium',
     lastUpdated: '10 min ago',
-    priceRange: '₹1000-₹2000',
+    priceRange: 'Moderate',
     rating: 4.8
   },
   {
@@ -25,7 +25,7 @@ const sampleDestinations: Destination[] = [
     imageUrl: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2',
     crowdLevel: 'High',
     lastUpdated: '5 min ago',
-    priceRange: '₹2000-₹5000',
+    priceRange: 'Moderate',
     rating: 4.5
   },
   {
@@ -37,7 +37,7 @@ const sampleDestinations: Destination[] = [
     imageUrl: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23',
     crowdLevel: 'Low',
     lastUpdated: '15 min ago',
-    priceRange: '₹3000-₹6000',
+    priceRange: 'Moderate',
     rating: 4.7
   }
 ];

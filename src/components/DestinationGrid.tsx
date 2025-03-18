@@ -1,7 +1,7 @@
 
 import React from 'react';
 import DestinationCard from './DestinationCard';
-import { Destination } from '@/hooks/useCrowdData';
+import { Destination } from '@/utils/crowdData';
 
 interface DestinationGridProps {
   destinations: Destination[];

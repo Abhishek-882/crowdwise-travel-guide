@@ -28,6 +28,7 @@ const Navbar: React.FC = () => {
                   key={item.name} 
                   to={item.path}
                   className="text-sm font-medium hover:text-primary transition-colors"
+                  onClick={() => console.log(`Navigating to ${item.path}`)}
                 >
                   {item.name}
                 </Link>
@@ -41,7 +42,7 @@ const Navbar: React.FC = () => {
               size="sm" 
               onClick={() => {
                 console.log("Login button clicked");
-                // Will add login functionality later
+                navigate("/login");
               }}
             >
               Login
@@ -50,7 +51,7 @@ const Navbar: React.FC = () => {
               size="sm"
               onClick={() => {
                 console.log("Sign Up button clicked");
-                // Will add signup functionality later
+                navigate("/signup");
               }}
             >
               Sign Up
