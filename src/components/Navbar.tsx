@@ -1,9 +1,11 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const Navbar: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <header className="w-full fixed top-0 left-0 z-50 bg-background/80 backdrop-blur-md border-b">
       <div className="container mx-auto px-6">
@@ -17,23 +19,40 @@ const Navbar: React.FC = () => {
             </Link>
             
             <nav className="hidden md:flex ml-8 gap-6">
-              {["Destinations", "About", "Contact"].map((item) => (
+              {[
+                { name: "Destinations", path: "/destinations" },
+                { name: "About", path: "/about" },
+                { name: "Contact", path: "/contact" }
+              ].map((item) => (
                 <Link 
-                  key={item} 
-                  to={`/${item.toLowerCase()}`}
+                  key={item.name} 
+                  to={item.path}
                   className="text-sm font-medium hover:text-primary transition-colors"
                 >
-                  {item}
+                  {item.name}
                 </Link>
               ))}
             </nav>
           </div>
           
           <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => {
+                console.log("Login button clicked");
+                // Will add login functionality later
+              }}
+            >
               Login
             </Button>
-            <Button size="sm">
+            <Button 
+              size="sm"
+              onClick={() => {
+                console.log("Sign Up button clicked");
+                // Will add signup functionality later
+              }}
+            >
               Sign Up
             </Button>
           </div>

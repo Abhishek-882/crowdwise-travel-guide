@@ -1,18 +1,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
+import { Destination } from '@/utils/crowdData';
 
-export interface Destination {
-  id: string;
-  name: string;
-  location: string;
-  category: string;
-  description: string;
-  image: string;
-  crowdLevel: 'Low' | 'Medium' | 'High';
-  lastUpdated: string;
-}
-
-// Sample destinations data
+// Sample destinations data with all required properties
 const sampleDestinations: Destination[] = [
   {
     id: '1',
@@ -20,9 +10,11 @@ const sampleDestinations: Destination[] = [
     location: 'Agra, Uttar Pradesh',
     category: 'Historical',
     description: 'One of the seven wonders of the world, an ivory-white marble mausoleum.',
-    image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523',
+    imageUrl: 'https://images.unsplash.com/photo-1564507592333-c60657eea523',
     crowdLevel: 'Medium',
-    lastUpdated: '10 min ago'
+    lastUpdated: '10 min ago',
+    priceRange: '₹1000-₹2000',
+    rating: 4.8
   },
   {
     id: '2',
@@ -30,9 +22,11 @@ const sampleDestinations: Destination[] = [
     location: 'Goa',
     category: 'Beach',
     description: 'Famous beaches with golden sand and clear water.',
-    image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2',
+    imageUrl: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2',
     crowdLevel: 'High',
-    lastUpdated: '5 min ago'
+    lastUpdated: '5 min ago',
+    priceRange: '₹2000-₹5000',
+    rating: 4.5
   },
   {
     id: '3',
@@ -40,9 +34,11 @@ const sampleDestinations: Destination[] = [
     location: 'Shimla, Himachal Pradesh',
     category: 'Mountain',
     description: 'Beautiful hill station with scenic views.',
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23',
+    imageUrl: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23',
     crowdLevel: 'Low',
-    lastUpdated: '15 min ago'
+    lastUpdated: '15 min ago',
+    priceRange: '₹3000-₹6000',
+    rating: 4.7
   }
 ];
 
