@@ -1,56 +1,49 @@
 
-import { useState } from 'react';
-import { Search } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React, { useState } from 'react';
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
   className?: string;
-  placeholder?: string;
 }
 
-const SearchBar = ({ 
-  onSearch, 
-  className,
-  placeholder = "Search for destinations..."
-}: SearchBarProps) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, className }) => {
   const [query, setQuery] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      onSearch(query.trim());
-    }
+    onSearch(query);
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit} 
-      className={cn(
-        "relative flex items-center w-full max-w-md", 
-        className
-      )}
-    >
-      <div className="relative w-full">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={placeholder}
-          className="w-full py-3 pl-12 pr-4 bg-white dark:bg-card border border-border rounded-xl 
-                     focus:outline-none focus:ring-2 focus:ring-primary/30 shadow-sm
-                     text-foreground placeholder:text-muted-foreground"
-        />
-        <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-          <Search className="w-5 h-5 text-muted-foreground" />
-        </div>
-      </div>
+    <form onSubmit={handleSubmit} className={cn("relative w-full", className)}>
+      <Input
+        type="search"
+        placeholder="Search for destinations..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="pr-10"
+      />
       <button
         type="submit"
-        className="absolute right-3 bg-primary text-white p-1.5 rounded-md hover:bg-primary/90 transition-colors"
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
         aria-label="Search"
       >
-        <Search className="w-4 h-4" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
       </button>
     </form>
   );
