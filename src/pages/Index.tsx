@@ -1,4 +1,6 @@
+
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import DestinationGrid from '@/components/DestinationGrid';
@@ -7,8 +9,10 @@ import SearchBar from '@/components/SearchBar';
 import useCrowdData from '@/hooks/useCrowdData';
 import { cn } from '@/lib/utils';
 import { Destination } from '@/utils/crowdData';
+import { toast } from '@/components/ui/use-toast';
 
 const Index = () => {
+  const location = useLocation();
   const { 
     destinations, 
     isLoading, 
@@ -31,6 +35,19 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
+  // Log navigation events
+  useEffect(() => {
+    console.log("Current path:", location.pathname);
+    // Show toast notification when route changes
+    toast({
+      title: "Page Loaded",
+      description: `You are now viewing: ${location.pathname || 'Home'}`,
+    });
+    
+    // Scroll to top on navigation
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (!query.trim()) {
@@ -49,13 +66,60 @@ const Index = () => {
 
   const displayDestinations = searchQuery ? searchResults : destinations;
   
-  return (
-    <div className="min-h-screen">
-      <Navbar />
-      <Hero />
-      
-      {/* Content sections */}
-      <main className="container mx-auto px-6 py-16">
+  // Render different content based on path
+  const renderContent = () => {
+    const path = location.pathname;
+    
+    if (path === '/about') {
+      return (
+        <div className="py-24 text-center">
+          <h1 className="text-3xl font-bold mb-6">About CrowdWise</h1>
+          <p className="max-w-2xl mx-auto">
+            CrowdWise is a platform dedicated to helping travelers find less crowded destinations.
+            Our mission is to provide real-time crowd data to enhance travel experiences.
+          </p>
+        </div>
+      );
+    }
+    
+    if (path === '/contact') {
+      return (
+        <div className="py-24 text-center">
+          <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
+          <p className="max-w-2xl mx-auto mb-6">
+            Have questions or feedback? We'd love to hear from you!
+          </p>
+          <button className="px-6 py-3 bg-primary text-white rounded-md">
+            Send Message
+          </button>
+        </div>
+      );
+    }
+    
+    if (path === '/login' || path === '/signup') {
+      return (
+        <div className="py-24 text-center">
+          <h1 className="text-3xl font-bold mb-6">
+            {path === '/login' ? 'Login to Your Account' : 'Create an Account'}
+          </h1>
+          <div className="max-w-md mx-auto p-6 bg-card rounded-lg shadow-md">
+            <p className="mb-6">
+              {path === '/login' 
+                ? 'Enter your credentials to access your account' 
+                : 'Join CrowdWise to get personalized recommendations'
+              }
+            </p>
+            <button className="w-full py-3 bg-primary text-white rounded-md">
+              {path === '/login' ? 'Login' : 'Sign Up'}
+            </button>
+          </div>
+        </div>
+      );
+    }
+    
+    // Default: show destinations
+    return (
+      <>
         {/* Section heading */}
         <div className="mb-12 max-w-2xl">
           <div className="flex items-center mb-2">
@@ -221,6 +285,18 @@ const Index = () => {
             </button>
           </div>
         </div>
+      </>
+    );
+  };
+  
+  return (
+    <div className="min-h-screen">
+      <Navbar />
+      <Hero />
+      
+      {/* Content sections */}
+      <main className="container mx-auto px-6 py-16">
+        {renderContent()}
       </main>
       
       {/* Footer */}

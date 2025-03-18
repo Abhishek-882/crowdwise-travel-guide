@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Destination } from '@/utils/crowdData';
 
@@ -8,7 +9,8 @@ interface DestinationCardProps {
 }
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
-  const { name, location, crowdLevel, imageUrl, lastUpdated } = destination;
+  const { id, name, location, crowdLevel, imageUrl, lastUpdated } = destination;
+  const navigate = useNavigate();
   
   // Determine crowd level indicator color
   const crowdColor = {
@@ -17,8 +19,15 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
     High: "bg-red-500"
   }[crowdLevel];
 
+  const handleViewDetails = () => {
+    console.log(`Viewing details for destination: ${name} (ID: ${id})`);
+    // In a real app, this would navigate to a destination detail page
+    // navigate(`/destinations/${id}`);
+    alert(`This would navigate to details for: ${name}`);
+  };
+
   return (
-    <Card className="overflow-hidden group transition-all hover:shadow-lg">
+    <Card className="overflow-hidden group transition-all hover:shadow-lg cursor-pointer" onClick={handleViewDetails}>
       <div className="aspect-video relative overflow-hidden">
         <img 
           src={imageUrl || "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2"} 
@@ -41,7 +50,13 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
           <span className="text-sm">{crowdLevel} Crowd</span>
         </div>
         
-        <button className="text-sm text-primary font-medium hover:underline">
+        <button 
+          className="text-sm text-primary font-medium hover:underline"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent card click event
+            handleViewDetails();
+          }}
+        >
           View Details
         </button>
       </CardFooter>

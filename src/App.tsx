@@ -23,15 +23,23 @@ const App = () => {
   // Log navigation for debugging
   useEffect(() => {
     console.log("App mounted - navigation should be working");
+    
+    // Add global navigation event listener
+    const handleNavigation = () => {
+      console.log("Navigation occurred to:", window.location.pathname);
+    };
+    
+    window.addEventListener('popstate', handleNavigation);
+    return () => window.removeEventListener('popstate', handleNavigation);
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
+        <BrowserRouter>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/destinations" element={<Index />} />
@@ -41,8 +49,8 @@ const App = () => {
               <Route path="/signup" element={<Index />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+          </TooltipProvider>
+        </BrowserRouter>
       </AuthProvider>
     </QueryClientProvider>
   );

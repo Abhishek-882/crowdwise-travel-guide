@@ -28,7 +28,11 @@ const Navbar: React.FC = () => {
                   key={item.name} 
                   to={item.path}
                   className="text-sm font-medium hover:text-primary transition-colors"
-                  onClick={() => console.log(`Navigating to ${item.path}`)}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default link behavior
+                    console.log(`Navigating to ${item.path}`);
+                    navigate(item.path); // Use navigate for programmatic navigation
+                  }}
                 >
                   {item.name}
                 </Link>

@@ -78,13 +78,20 @@ const useCrowdData = () => {
       // In a real app, this would fetch fresh data
     }, 1000);
   }, []);
+  
+  // Helper function to get a destination by id
+  const getDestinationById = useCallback((id: string) => {
+    console.log(`Looking up destination with id: ${id}`);
+    return sampleDestinations.find(d => d.id === id);
+  }, []);
 
   return {
     destinations,
     isLoading,
     filter,
     filterByCrowdLevel,
-    forceUpdate
+    forceUpdate,
+    getDestinationById
   };
 };
 
