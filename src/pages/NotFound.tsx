@@ -1,9 +1,11 @@
 
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.error(
@@ -11,6 +13,11 @@ const NotFound = () => {
       location.pathname
     );
   }, [location.pathname]);
+
+  const handleGoHome = () => {
+    console.log("Navigating to home from 404 page");
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -20,13 +27,12 @@ const NotFound = () => {
         <p className="text-gray-500 mb-8">
           The page you are looking for doesn't exist or has been moved.
         </p>
-        <Link 
-          to="/" 
+        <Button 
+          onClick={handleGoHome}
           className="px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-          onClick={() => console.log("Navigating back to home from 404 page")}
         >
           Return to Home
-        </Link>
+        </Button>
       </div>
     </div>
   );

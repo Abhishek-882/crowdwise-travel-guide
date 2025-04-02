@@ -1,10 +1,15 @@
 
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import AuthModal from './AuthModal';
+import ProfileModal from './ProfileModal';
 
 const Navbar: React.FC = () => {
-  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 bg-background/80 backdrop-blur-md border-b">
@@ -28,11 +33,6 @@ const Navbar: React.FC = () => {
                   key={item.name} 
                   to={item.path}
                   className="text-sm font-medium hover:text-primary transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent default link behavior
-                    console.log(`Navigating to ${item.path}`);
-                    navigate(item.path); // Use navigate for programmatic navigation
-                  }}
                 >
                   {item.name}
                 </Link>
@@ -41,28 +41,56 @@ const Navbar: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => {
-                console.log("Login button clicked");
-                navigate("/login");
-              }}
-            >
-              Login
-            </Button>
-            <Button 
-              size="sm"
-              onClick={() => {
-                console.log("Sign Up button clicked");
-                navigate("/signup");
-              }}
-            >
-              Sign Up
-            </Button>
+            {user ? (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setShowProfileModal(true)}
+                >
+                  Profile
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowAuthModal(true)}
+                >
+                  Login
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={() => setShowAuthModal(false)}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
+      
+      {showAuthModal && (
+        <AuthModal 
+          isOpen={showAuthModal} 
+          onClose={() => setShowAuthModal(false)}
+        />
+      )}
+      
+      {showProfileModal && (
+        <ProfileModal 
+          isOpen={showProfileModal} 
+          onClose={() => setShowProfileModal(false)}
+        />
+      )}
     </header>
   );
 };
